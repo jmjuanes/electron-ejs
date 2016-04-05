@@ -27,16 +27,16 @@ Now you can load `ejs` files in your electron app:
 
 ```javascript
 app.on('ready', function () {
-
+	
 	//Create the new window
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+	mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
-  //More app configuration
+	//More app configuration
 	// ....
 
-  //Load the ejs file
-  mainWindow.loadUrl('file://' + __dirname + '/index.ejs');
-	
+	//Load the ejs file
+	mainWindow.loadUrl('file://' + __dirname + '/index.ejs');
+
 });
 ```
 
