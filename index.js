@@ -13,7 +13,7 @@ var mime = require('mime');
 function ElectronEjs(options)
 {
   //Check options
-  if(typeof options === 'undefined') { options = {}; }
+  if(typeof options === 'undefined') { var options = {}; }
 
   //App ready event
   app.on('ready', function(){
