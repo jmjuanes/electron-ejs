@@ -23,10 +23,28 @@ var electronEjs = require('electron-ejs')(locals);
 
 Where `locals` is an object where each key is used as a variable in your template.
 
+Now you can load `ejs` files in your electron app:
 
-## Issues
+```javascript
+app.on('ready', function () {
 
-You can publish issues here https://github.com/jmjuanes/electron-ejs/issues
+	//Create the new window
+  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+
+  //More app configuration
+	// ....
+
+  //Load the ejs file
+  mainWindow.loadUrl('file://' + __dirname + '/index.ejs');
+	
+});
+```
+
+
+## Contribute
+
+Pull requests and issues are always welcome :)
+
 
 ## License
 
