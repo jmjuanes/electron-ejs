@@ -29,30 +29,41 @@ function ElectronEjs(options)
 
       //Get the file extension
       var extension = path.extname(file);
+			
+			//Get the file content
+			fs.readFile(file, 'utf8', (err, content) => {
+				if(err)
+				{
+					return callback(-6);
+				}
+				try
+				{
+					//Check the extension
+					if(extension === '.ejs')
+					{
+						//Add the path to options
+						options.filename = file;
 
-      //Get the file content
-      var content = fs.readFileSync(file, 'utf8');
+						//Get the full file
+						var full = ejs.render(content, options)
 
-      //Check the extension
-      if(extension === '.ejs')
-      {
-        //Add the path to options
-        options.filename = file;
+						//Return the callback
+						return callback({data: new Buffer(full), mimeType:'text/html'});
+					}
+					else
+					{
+						//Get the mime type
+						var mimet = mime.lookup(extension);
 
-        //Get the full file
-        var full = ejs.render(content, options)
-
-        //Return the callback
-        return callback({data: new Buffer(full), mimeType:'text/html'});
-      }
-      else
-      {
-        //Get the mime type
-        var mimet = mime.lookup(extension);
-
-        //Return the callback
-        return callback({data: new Buffer(content), mimeType: mimet});
-      }
+						//Return the callback
+						return callback({data: new Buffer(content), mimeType: mimet});
+					}
+				}
+				catch(ex)
+				{
+					return callback(-2);
+				}
+			});
     });
   });
 }
