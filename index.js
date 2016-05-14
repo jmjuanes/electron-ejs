@@ -42,6 +42,12 @@ module.exports = function(options)
 
         try
         {
+          //Convert the content to utf8
+          content = content.toString('utf8');
+
+          //Initialize the mime type
+          var mimet = 'text/html';
+
           //Check the extension
           if(extension === '.ejs')
           {
@@ -49,19 +55,16 @@ module.exports = function(options)
             options.filename = file;
 
             //Get the full file
-            var full = ejs.render(content.toString('utf8'), options)
-
-            //Return the callback
-            return callback({ data: new Buffer(full), mimeType:'text/html' });
+            content = ejs.render(content, options);
           }
           else
           {
             //Get the mime type
-            var mimet = mime.lookup(extension);
-
-            //Return the callback
-            return callback({ data: content, mimeType: mimet });
+            mimet = mime.lookup(extension);
           }
+
+          //Return the callback
+          return callback({ data: new Buffer(content), mimeType: mimet });
         }
         catch(ex)
         {
