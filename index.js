@@ -31,11 +31,15 @@ function ElectronEjs(options)
       var extension = path.extname(file);
 
       //Get the file content
-      fs.readFile(file, 'utf8', (err, content) => {
+      fs.readFile(file, 'utf8', function(err, content){
+
+        //Check for error opening the file
         if(err)
         {
+          //File not found
           return callback(-6);
         }
+
         try
         {
           //Check the extension
@@ -45,10 +49,10 @@ function ElectronEjs(options)
             options.filename = file;
 
             //Get the full file
-            var full = ejs.render(content.toString("utf8"), options)
+            var full = ejs.render(content.toString('utf8'), options)
 
             //Return the callback
-            return callback({data: new Buffer(full), mimeType:'text/html'});
+            return callback({ data: new Buffer(full), mimeType:'text/html' });
           }
           else
           {
@@ -56,13 +60,15 @@ function ElectronEjs(options)
             var mimet = mime.lookup(extension);
 
             //Return the callback
-            return callback({data: content, mimeType: mimet});
+            return callback({ data: content, mimeType: mimet });
           }
         }
         catch(ex)
         {
+          //A generic failure occurred
           return callback(-2);
         }
+
       });
     });
   });
@@ -74,11 +80,11 @@ function ParsePath(url)
   //Parse the url
   var p = pathurl.parse(url);
   var path = p.pathname;
-  
+
   if(process.platform === 'win32') {
     path = path.substr(1);
   }
-  
+
   //Return the path name
   return path;
 }
