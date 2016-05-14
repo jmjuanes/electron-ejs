@@ -1,8 +1,8 @@
 {
   "name": "electron-ejs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple Electron plugin for render EJS templates.",
-  "keywords": ["electron", "ejs"],
+  "keywords": [ "electron", "ejs" ],
   "author": "Josemi Juanes <josemijuanes@gmail.com>",
   "main": "./index.js",
   "repository": { "type": "git", "url": "git://github.com/jmjuanes/electron-ejs.git" },
