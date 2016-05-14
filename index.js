@@ -5,12 +5,12 @@ var app = electron.app;
 //Import dependencies
 var fs = require('fs');
 var path = require('path');
-var pathurl = require('url');
+var url = require('url');
 var ejs = require('ejs');
 var mime = require('mime');
 
 //Main function
-function ElectronEjs(options)
+module.exports = function(options)
 {
   //Check options
   if(typeof options === 'undefined') { var options = {}; }
@@ -74,20 +74,23 @@ function ElectronEjs(options)
   });
 }
 
-//Function for parse the path
-function ParsePath(url)
+//Function to parse the path
+function ParsePath(u)
 {
   //Parse the url
-  var p = pathurl.parse(url);
-  var path = p.pathname;
+  var p = url.parse(u);
 
-  if(process.platform === 'win32') {
-    path = path.substr(1);
+  //Get the path name
+  var pname = p.pathname;
+
+  //Check for Windows
+  if(process.platform === 'win32')
+  {
+    //Remove the first / from the path
+    //https://github.com/jmjuanes/electron-ejs/pull/4#issuecomment-219254028
+    pname = pname.substr(1);
   }
 
   //Return the path name
-  return path;
+  return pname;
 }
-
-//Exports to node
-module.exports = ElectronEjs;
