@@ -45,7 +45,7 @@ function ElectronEjs(options)
             options.filename = file;
 
             //Get the full file
-            var full = ejs.render(content, options)
+            var full = ejs.render(content.toString("utf8"), options)
 
             //Return the callback
             return callback({data: new Buffer(full), mimeType:'text/html'});
@@ -56,7 +56,7 @@ function ElectronEjs(options)
             var mimet = mime.lookup(extension);
 
             //Return the callback
-            return callback({data: new Buffer(content), mimeType: mimet});
+            return callback({data: content, mimeType: mimet});
           }
         }
         catch(ex)
