@@ -62,12 +62,12 @@ function ParsePath(url)
 {
   //Parse the url
   var p = pathurl.parse(url);
-	var path = p.pathname;
-	
-	if(process.platform === 'win32') {
+  var path = p.pathname;
+  
+  if(process.platform === 'win32') {
     path = path.substr(1);
   }
-	
+  
   //Return the path name
   return path;
 }
