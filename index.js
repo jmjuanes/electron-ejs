@@ -1,13 +1,13 @@
-//Import electron
-var electron = require('electron');
-var app = electron.app;
-
 //Import dependencies
+var ejs = require('ejs');
+var electron = require('electron');
 var fs = require('fs');
+var mime = require('mime');
 var path = require('path');
 var url = require('url');
-var ejs = require('ejs');
-var mime = require('mime');
+
+//Import app
+var app = electron.app;
 
 //Main function
 module.exports = function(options)
@@ -19,7 +19,7 @@ module.exports = function(options)
   app.on('ready', function(){
 
     //Import protocol
-    var protocol = require('protocol');
+    var protocol = electron.protocol;
 
     //Intercept the file protocol
     protocol.interceptBufferProtocol('file', function(request, callback){
