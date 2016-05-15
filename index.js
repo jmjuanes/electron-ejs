@@ -5,16 +5,21 @@ var fs = require('fs');
 var mime = require('mime');
 var path = require('path');
 var url = require('url');
+var util = require('util');
+var EventEmitter = require('events').EventEmitter;
 
 //Import app
 var app = electron.app;
 
-//Main function
-module.exports = function(options)
-{
-  //Check options
-  if(typeof options === 'undefined') { var options = {}; }
 
+//Main function
+var ElectronEjs = function(data, options)
+{
+  var self = this;
+  self.emit("test", "test");
+  //Check data and options
+  if(typeof data === 'undefined') { var data = {}; }
+  if(typeof options === 'undefined') { var options = {}; }
   //App ready event
   app.on('ready', function(){
 
@@ -30,48 +35,52 @@ module.exports = function(options)
       //Get the file extension
       var extension = path.extname(file);
 
-      //Get the file content
-      fs.readFile(file, 'utf8', function(err, content){
-
-        //Check for error opening the file
+      fs.access(file, fs.F_OK | fs.R_OK, function(err) {
         if(err)
         {
+          self.emit("error", err);
           //File not found
           return callback(-6);
         }
 
-        try
+        //Check the extension
+        if(extension === '.ejs')
         {
-          //Convert the content to utf8
-          content = content.toString('utf8');
-
-          //Initialize the mime type
-          var mimet = 'text/html';
-
-          //Check the extension
-          if(extension === '.ejs')
+          //Add the path to data
+          data.filename = file;
+          
+          var renderTemplate = function()
           {
-            //Add the path to options
-            options.filename = file;
-
-            //Get the full file
-            content = ejs.render(content, options);
+            //Render the full file
+            ejs.renderFile(file, data, options, function(err2, content) {
+              if(err2)
+              {
+                self.emit("error", err2);
+                //An unexpected error
+                return callback(-9);
+              }
+              //Return the callback
+              return callback({ data: new Buffer(content), mimeType: 'text/html' });
+            });
           }
-          else
+          if(!self.emit("before-render", file, data, options, renderTemplate))
           {
-            //Get the mime type
-            mimet = mime.lookup(extension);
+            renderTemplate();
           }
-
-          //Return the callback
-          return callback({ data: new Buffer(content), mimeType: mimet });
         }
-        catch(ex)
+        else
         {
-          //A generic failure occurred
-          return callback(-2);
+          fs.readFile(file, function(err2, content){
+            if(err2)
+            {
+              self.emit("error", err2);
+              //Failed
+              return callback(-2);
+            }
+            //Return the callback
+            return callback({ data: content, mimeType: mime.lookup(extension) });
+          });
         }
-
       });
     });
   });
@@ -97,3 +106,8 @@ function ParsePath(u)
   //Return the path name
   return pname;
 }
+
+// inheriting EventEmmiter to ElectronEjs
+util.inherits(ElectronEjs, EventEmitter);
+
+module.exports = ElectronEjs;
