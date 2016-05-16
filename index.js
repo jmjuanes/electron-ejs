@@ -35,8 +35,8 @@ var ElectronEjs = function(data, options)
       //Get the file extension
       var extension = path.extname(file);
 
-      fs.access(file, fs.F_OK | fs.R_OK, function(err) {
-        if(err)
+      fs.exists(file, function(exists) {
+        if(!exists)
         {
           self.emit("error", err);
           //File not found
@@ -51,11 +51,12 @@ var ElectronEjs = function(data, options)
           
           var renderTemplate = function()
           {
+
             //Render the full file
-            ejs.renderFile(file, data, options, function(err2, content) {
-              if(err2)
+            ejs.renderFile(file, data, options, function(err, content) {
+              if(err)
               {
-                self.emit("error", err2);
+                self.emit("error", err);
                 //An unexpected error
                 return callback(-9);
               }
