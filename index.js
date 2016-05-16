@@ -16,7 +16,11 @@ var app = electron.app;
 var ElectronEjs = function(data, options)
 {
   var self = this;
-  self.emit("test", "test");
+  if(self.emit === undefined)
+  {
+    throw Error("This initialization is obsolete! Please look documentation for more informations.");
+    return;
+  }
   //Check data and options
   if(typeof data === 'undefined') { var data = {}; }
   if(typeof options === 'undefined') { var options = {}; }
