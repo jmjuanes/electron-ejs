@@ -42,7 +42,7 @@ var ElectronEjs = function(data, options)
       fs.exists(file, function(exists) {
         if(!exists)
         {
-          self.emit("error", err);
+          self.emit("error", "File not found!");
           //File not found
           return callback(-6);
         }
