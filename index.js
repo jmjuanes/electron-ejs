@@ -11,16 +11,22 @@ var EventEmitter = require('events').EventEmitter;
 //Import app
 var app = electron.app;
 
-
 //Main function
 var ElectronEjs = function(data, options)
 {
+  //Get this
   var self = this;
-  if(self.emit === undefined)
+
+  //Check for undefined emit
+  if(typeof self.emit === 'undefined')
   {
+    //Throw error
     throw Error("This initialization is obsolete! Please look documentation for more informations.");
+
+    //Exit
     return;
   }
+
   //Check data and options
   if(typeof data === 'undefined') { var data = {}; }
   if(typeof options === 'undefined') { var options = {}; }
@@ -52,7 +58,7 @@ var ElectronEjs = function(data, options)
         {
           //Add the path to data
           data.filename = file;
-          
+
           var renderTemplate = function()
           {
 
