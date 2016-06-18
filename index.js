@@ -27,9 +27,12 @@ var ElectronEjs = function(data, options)
     return;
   }
 
-  //Check data and options
+  //Check data
   if(typeof data === 'undefined') { var data = {}; }
+
+  //Check options
   if(typeof options === 'undefined') { var options = {}; }
+
   //App ready event
   app.on('ready', function(){
 
@@ -45,11 +48,16 @@ var ElectronEjs = function(data, options)
       //Get the file extension
       var extension = path.extname(file);
 
-      fs.exists(file, function(exists) {
+      //WE MUST CHANGE THIS
+      fs.exists(file, function(exists){
+
+        //Check if file doesn't exists
         if(!exists)
         {
+          //Emit error
           self.emit("error", "File not found!");
-          //File not found
+
+          //Return file not found
           return callback(-6);
         }
 
@@ -59,42 +67,62 @@ var ElectronEjs = function(data, options)
           //Add the path to data
           data.filename = file;
 
+          //Render template function
           var renderTemplate = function()
           {
-
             //Render the full file
             ejs.renderFile(file, data, options, function(err, content) {
+
+              //Check for error
               if(err)
               {
-                self.emit("error", err);
-                //An unexpected error
+                //Emit error
+                self.emit('error', err);
+
+                //Unexpected error
                 return callback(-9);
               }
+
               //Return the callback
               return callback({ data: new Buffer(content), mimeType: 'text/html' });
             });
-          }
-          if(!self.emit("before-render", file, data, options, renderTemplate))
+          };
+
+          //Check for event before render
+          if(!self.emit('before-render', file, data, options, renderTemplate))
           {
+            //Render the template
             renderTemplate();
           }
         }
         else
         {
-          fs.readFile(file, function(err2, content){
-            if(err2)
+          //Read the file content
+          fs.readFile(file, function(err, content){
+
+            //Check for error
+            if(err)
             {
-              self.emit("error", err2);
-              //Failed
+              //Emit error
+              self.emit('error', err);
+
+              //Generic failure
               return callback(-2);
             }
-            //Return the callback
+
+            //Return the callback with the file content
             return callback({ data: content, mimeType: mime.lookup(extension) });
+
           });
         }
+
       });
+
     });
+    
   });
+
+  //End ElectronEjs function
 }
 
 //Function to parse the path
@@ -121,4 +149,5 @@ function ParsePath(u)
 // inheriting EventEmmiter to ElectronEjs
 util.inherits(ElectronEjs, EventEmitter);
 
+//Exports to node
 module.exports = ElectronEjs;
