@@ -27,7 +27,7 @@ Now you can load `ejs` files in your electron app:
 
 ```javascript
 app.on('ready', function () {
-	
+
 	//Create the new window
 	mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
@@ -41,11 +41,17 @@ app.on('ready', function () {
 ```
 
 
-## Contribute
+## Want to contribute?
 
 Pull requests and issues are always welcome :)
+
+## Contributors
+
+[![Josemi Juanes](https://avatars3.githubusercontent.com/u/5751201?v=3&s=100)](https://github.com/jmjuanes) | [![Marek Kraus](https://avatars3.githubusercontent.com/u/1665373?v=3&s=100)](https://github.com/gamelaster)
+---|---
+[Josemi Juanes](https://github.com/jmjuanes) | [Marek Kraus](https://github.com/gamelaster)
 
 
 ## License
 
-**electron-ejs** is under the [MIT](LICENSE) license.
+Under the [MIT LICENSE](LICENSE).
