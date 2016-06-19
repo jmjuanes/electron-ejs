@@ -4,6 +4,7 @@ var electron = require('electron');
 var fs = require('fs');
 var mime = require('mime');
 var path = require('path');
+var pStat = require('pstat');
 var url = require('url');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
@@ -48,11 +49,11 @@ var ElectronEjs = function(data, options)
       //Get the file extension
       var extension = path.extname(file);
 
-      //WE MUST CHANGE THIS
-      fs.exists(file, function(exists){
+      //Check if path exists and is a file
+      pStat.isFile(file, function(exists){
 
         //Check if file doesn't exists
-        if(!exists)
+        if(exists === false)
         {
           //Emit error
           self.emit("error", "File not found!");
@@ -119,7 +120,7 @@ var ElectronEjs = function(data, options)
       });
 
     });
-    
+
   });
 
   //End ElectronEjs function
