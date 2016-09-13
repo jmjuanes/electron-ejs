@@ -29,20 +29,20 @@ var ElectronEjs = function(data, options)
   }
 
   //Check data
-  if(typeof data === 'undefined') { var data = {}; }
+  if(typeof data === 'undefined'){ var data = {}; }
 
   //Check options
-  if(typeof options === 'undefined') { var options = {}; }
+  if(typeof options === 'undefined'){ var options = {}; }
 
   //App ready event
-  app.on('ready', function(){
-
+  app.on('ready', function()
+  {
     //Import protocol
     var protocol = electron.protocol;
 
     //Intercept the file protocol
-    protocol.interceptBufferProtocol('file', function(request, callback){
-
+    protocol.interceptBufferProtocol('file', function(request, callback)
+    {
       //Get the file
       var file = ParsePath(request.url);
 
@@ -50,8 +50,8 @@ var ElectronEjs = function(data, options)
       var extension = path.extname(file);
 
       //Check if path exists and is a file
-      pStat.isFile(file, function(exists){
-
+      pStat.isFile(file, function(exists)
+      {
         //Check if file doesn't exists
         if(exists === false)
         {
@@ -72,8 +72,8 @@ var ElectronEjs = function(data, options)
           var renderTemplate = function()
           {
             //Render the full file
-            ejs.renderFile(file, data, options, function(err, content) {
-
+            ejs.renderFile(file, data, options, function(err, content)
+            {
               //Check for error
               if(err)
               {
@@ -99,8 +99,8 @@ var ElectronEjs = function(data, options)
         else
         {
           //Read the file content
-          fs.readFile(file, function(err, content){
-
+          fs.readFile(file, function(err, content)
+          {
             //Check for error
             if(err)
             {
@@ -113,14 +113,10 @@ var ElectronEjs = function(data, options)
 
             //Return the callback with the file content
             return callback({ data: content, mimeType: mime.lookup(extension) });
-
           });
         }
-
       });
-
     });
-
   });
 
   //End ElectronEjs function
@@ -147,7 +143,7 @@ function ParsePath(u)
   return pname;
 }
 
-// inheriting EventEmmiter to ElectronEjs
+//Inherit EventEmmiter to ElectronEjs
 util.inherits(ElectronEjs, EventEmitter);
 
 //Exports to node
