@@ -49,7 +49,7 @@ Initializes the `electron-ejs` parser. This can take the following arguments:
 
 #### data 
 
-An object with the data that will be used as a variable in your `ejs` files. 
+An object with the data that will be used as a variable in your `ejs` file. 
 
 #### options 
 
