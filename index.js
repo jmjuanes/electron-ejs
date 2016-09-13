@@ -65,8 +65,8 @@ var ElectronEjs = function(data, options)
         //Check the extension
         if(extension === '.ejs')
         {
-          //Add the path to data
-          data.filename = file;
+          //Add the path to options
+          options.filename = file;
 
           //Render template function
           var renderTemplate = function()
