@@ -6,39 +6,55 @@
 Simple Electron plugin for render EJS templates. It allows you to use `ejs` files in your electron projects.
 
 
-## How to use it
+## Install
 
-First, install **electron-ejs** using NPM:
+Install **electron-ejs** using NPM:
 
-```sh
+```
 npm install electron-ejs
 ```
 
-For initialize **electron-ejs** on your project, simply add
+## Usage
 
 ```javascript
-//Import template parser
-var electronEjs = require('electron-ejs')(locals);
-```
+//Import dependencies 
+var electron = require('electron');
+var electronEjs = require('electron-ejs')(); 
 
-Where `locals` is an object where each key is used as a variable in your template.
+//Initialize the app 
+var app = electron.app;
 
-Now you can load `ejs` files in your electron app:
+//Initialize the ejs parser 
+var ejs = new electronEjs({ key: 'my value' }, {}); 
 
-```javascript
-app.on('ready', function () {
-
-	//Create the new window
-	mainWindow = new BrowserWindow({ width: 800, height: 600 });
-
-	//More app configuration
-	// ....
-
-	//Load the ejs file
-	mainWindow.loadUrl('file://' + __dirname + '/index.ejs');
-
+//Now you can read EJS files
+app.on('ready', function()
+{
+  //Create the new window
+  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  
+  //More app configuration
+  // ....
+  
+  //Load the ejs file
+  mainWindow.loadUrl('file://' + __dirname + '/index.ejs');
 });
-```
+``` 
+
+## API
+
+### ejs = new electronEjs(data, options)
+
+This method initializes the `electron-ejs` parser. This can take the following arguments: 
+
+#### data 
+
+An object with the data that will be used as a variables in your `ejs` files. 
+
+#### options 
+
+An object with the `ejs` options. The list with all the options are available here: [https://github.com/mde/ejs#options](https://github.com/mde/ejs#options). 
+
 
 
 ## Want to contribute?
@@ -54,4 +70,4 @@ Pull requests and issues are always welcome :)
 
 ## License
 
-Under the [MIT LICENSE](LICENSE).
+[MIT](LICENSE) &copy; Josemi Juanes.
