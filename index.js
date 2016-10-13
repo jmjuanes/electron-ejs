@@ -139,6 +139,12 @@ function ParsePath(u)
     pname = pname.substr(1);
   }
 
+
+  //Sanitize URL. Spaces turn into `%20` symbols in the path and
+  //throws a `File Not Found Event`. This fix allows folder paths to have
+  //spaces in the folder name.
+  pname = pname.replace(/\s/g, ' ').replace(/%20/g, ' ');
+
   //Return the path name
   return pname;
 }
