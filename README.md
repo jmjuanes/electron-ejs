@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/electron-ejs.svg?style=flat-square)](https://www.npmjs.com/package/electron-ejs)
 [![npm](https://img.shields.io/npm/dt/electron-ejs.svg?style=flat-square)](https://www.npmjs.com/package/electron-ejs)
+[![npm](https://img.shields.io/npm/l/electron-ejs.svg?style=flat-square)](https://github.com/jmjuanes/electron-ejs)
 
 Simple Electron plugin for rendering EJS templates. It allows you to use `ejs` files in your electron projects.
 
