@@ -4,6 +4,7 @@
   "description": "Simple Electron plugin for rendering EJS templates.",
   "keywords": [
     "electron",
+    "electron-plugin",
     "ejs"
   ],
   "author": "Josemi Juanes <josemijuanes@gmail.com>",
