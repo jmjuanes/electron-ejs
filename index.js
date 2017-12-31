@@ -112,7 +112,7 @@ var ElectronEjs = function(data, options)
             }
 
             //Return the callback with the file content
-            return callback({ data: content, mimeType: mime.lookup(extension) });
+            return callback({ data: content, mimeType: mime.getType(extension) });
           });
         }
       });
