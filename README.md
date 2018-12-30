@@ -19,26 +19,28 @@ npm install electron-ejs
 
 ```javascript
 //Import dependencies
-var electron = require('electron');
-var electronEjs = require('electron-ejs');
+let electron = require("electron");
+let electronEjs = require("electron-ejs");
 
 //Initialize the app
-var app = electron.app;
+let app = electron.app;
 
 //Initialize the ejs parser
-var ejs = new electronEjs({ key: 'my value' }, {});
+let ejs = new electronEjs({"key": "my value"}, {});
 
 //Now you can read EJS files
-app.on('ready', function()
-{
-  //Create the new window
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+app.on("ready", function () {
+    //Create the new window
+    mainWindow = new BrowserWindow({
+        "width": 800, 
+        "height": 600
+    });
 
-  //More app configuration
-  // ....
+    //More app configuration
+    // ....
 
-  //Load the ejs file
-  mainWindow.loadUrl('file://' + __dirname + '/index.ejs');
+    //Load the ejs file
+    mainWindow.loadUrl("file://" + __dirname + "/index.ejs");
 });
 ```
 
@@ -71,3 +73,4 @@ See the [full list](https://github.com/jmjuanes/electron-ejs/graphs/contributors
 ## License
 
 [MIT](LICENSE) &copy; Josemi Juanes.
+
