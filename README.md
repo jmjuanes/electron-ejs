@@ -20,7 +20,7 @@ npm install electron-ejs
 ```javascript
 //Import dependencies
 var electron = require('electron');
-var electronEjs = require('electron-ejs')();
+var electronEjs = require('electron-ejs');
 
 //Initialize the app
 var app = electron.app;
