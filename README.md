@@ -40,7 +40,7 @@ app.on("ready", function () {
     // ....
 
     //Load the ejs file
-    mainWindow.loadUrl("file://" + __dirname + "/index.ejs");
+    mainWindow.loadURL("file://" + __dirname + "/index.ejs");
 });
 ```
 
